@@ -60,10 +60,23 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Fetch All Users
+// Fetch User Data Route
+router.get("/me", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user).select("-password");
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+// Fetch All Users Route
 router.get("/users", auth, async (req, res) => {
   try {
-    const users = await User.find().select("-password"); 
+    const users = await User.find().select("-password"); // Exclude passwords for security
     res.json(users);
   } catch (err) {
     console.error(err);
