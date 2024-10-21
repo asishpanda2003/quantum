@@ -3,33 +3,44 @@ import axios from '../utils/axios';
 import './Dashboard.css'; 
 
 const Dashboard = () => {
-    const [userData, setUserData] = useState(null);
+    const [users, setUsers] = useState([]);
 
+    // Fetch all users when component mounts
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUsers = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.get('/auth/me', {
+                const res = await axios.get('/auth/users', {  // Updated to get all users
                     headers: { 'x-auth-token': token }
                 });
-                setUserData(res.data);
+                setUsers(res.data);
             } catch (err) {
                 console.error(err);
             }
         };
 
-        fetchUserData();
+        fetchUsers();
     }, []);
 
-    if (!userData) return <h2>Loading...</h2>;
+    // Function to handle logout
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Remove token from localStorage
+        window.location.href = "/";  // Redirect to login page or home page
+    };
+
+    if (!users || users.length === 0) return <h2>Loading...</h2>;
 
     return (
         <div className="dashboard-container">
-            <h2>Welcome {userData.name}</h2>
+            <div className="dashboard-header">
+                <h2>Welcome</h2>
+                <button className="logout-button" onClick={handleLogout}>Logout</button>
+            </div>
             <div className="table-responsive">
                 <table className="styled-table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Date of Birth</th>
                             <th>Email</th>
@@ -37,12 +48,15 @@ const Dashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{userData.name}</td>
-                            <td>{new Date(userData.dob).toLocaleDateString()}</td>
-                            <td>{userData.email}</td>
-                            <td>••••••••••</td>
-                        </tr>
+                        {users.map((user, index) => (
+                            <tr key={user._id}>
+                                <td>{index + 1}</td>
+                                <td>{user.name}</td>
+                                <td>{new Date(user.dob).toLocaleDateString()}</td>
+                                <td>{user.email}</td>
+                                <td>••••••••••</td> {/* Passwords should be hidden */}
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

@@ -1,5 +1,27 @@
+/* General styling for all devices */
 .dashboard-container {
-    margin: 20px;
+    padding: 20px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logout-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: #ff3333;
 }
 
 .table-responsive {
@@ -9,10 +31,7 @@
 .styled-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 18px;
-    text-align: left;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .styled-table thead tr {
@@ -33,35 +52,61 @@
     background-color: #f3f3f3;
 }
 
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
-.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
+/* Media Queries for Responsiveness */
+
+/* For tablets and larger screens (>= 768px) */
+@media screen and (min-width: 768px) {
+    .dashboard-container {
+        padding: 40px;
+    }
+
+    .logout-button {
+        padding: 12px 24px;
+        font-size: 18px;
+    }
+
+    .styled-table {
+        font-size: 20px;
+    }
 }
 
-.status {
-    display: inline-flex;
-    align-items: center;
-    font-weight: bold;
+/* For small devices like tablets in portrait (<= 768px) */
+@media screen and (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logout-button {
+        margin-top: 10px;
+        width: 100%; /* Full width button for smaller devices */
+    }
+
+    .styled-table {
+        font-size: 16px;
+    }
 }
 
-.status.active {
-    color: #4CAF50;
-}
+/* For mobile devices (<= 576px) */
+@media screen and (max-width: 576px) {
+    .dashboard-container {
+        padding: 10px;
+    }
 
-.status.inactive {
-    color: #FF9800;
-}
+    .logout-button {
+        padding: 10px;
+        font-size: 14px;
+    }
 
-.status.suspended {
-    color: #F44336;
-}
+    .styled-table th, .styled-table td {
+        padding: 8px 10px;
+    }
 
-.status::before {
-    content: "●";
-    margin-right: 8px;
-    font-size: 1.2em;
+    .styled-table {
+        font-size: 14px;
+    }
 }
