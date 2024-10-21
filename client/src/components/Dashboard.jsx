@@ -24,8 +24,8 @@ const Dashboard = () => {
 
     // Function to handle logout
     const handleLogout = () => {
-        localStorage.removeItem('token'); // Remove token from localStorage
-        window.location.href = "/";  // Redirect to login page or home page
+        localStorage.removeItem('token');
+        window.location.href = "/"; 
     };
 
     if (!users || users.length === 0) return <h2>Loading...</h2>;
@@ -54,7 +54,7 @@ const Dashboard = () => {
                                 <td>{user.name}</td>
                                 <td>{new Date(user.dob).toLocaleDateString()}</td>
                                 <td>{user.email}</td>
-                                <td>••••••••••</td> {/* Passwords should be hidden */}
+                                <td>••••••••••</td>
                             </tr>
                         ))}
                     </tbody>
