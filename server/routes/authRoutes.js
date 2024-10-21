@@ -60,10 +60,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Fetch All Users Route
+// Fetch All Users
 router.get("/users", auth, async (req, res) => {
   try {
-    const users = await User.find().select("-password"); // Exclude passwords for security
+    const users = await User.find().select("-password"); 
     res.json(users);
   } catch (err) {
     console.error(err);
